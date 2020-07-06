@@ -4,16 +4,16 @@ import "./Navbar.css";
 
 const Navbar = () => {
   return (
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <Link to="/" class="nav-item nav-link active">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div className="navbar-nav">
+          <Link to="/" className="nav-item nav-link active">
             Home
           </Link>
-          <Link to="/movies" class="nav-item nav-link active">
+          <Link to="/movies" className="nav-item nav-link active">
             Movies
           </Link>
-          <Link to="/shows" class="nav-item nav-link active">
+          <Link to="/shows" className="nav-item nav-link active">
             TV Shows
           </Link>
         </div>

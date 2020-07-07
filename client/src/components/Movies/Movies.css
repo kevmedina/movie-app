@@ -1,0 +1,14 @@
+.movies-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.movie {
+  width: 300px;
+  border: 1px solid lightgray;
+}
+
+.movie > div {
+  padding: 10px;
+}

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Movies.css";
 
-const URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}`;
-
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
@@ -21,7 +19,7 @@ const Movies = () => {
       <h1>Movies</h1>
 
       {/* Dropdown button for categories */}
-      <div class="dropdown">
+      {/* <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"
           type="button"
@@ -43,7 +41,7 @@ const Movies = () => {
             Something else here
           </a>
         </div>
-      </div>
+      </div> */}
 
       {/* Movie Container */}
       <div className="movies-container">

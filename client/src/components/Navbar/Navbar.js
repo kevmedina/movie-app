@@ -7,15 +7,22 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <Link to="/" className="nav-item nav-link active">
-            Home
-          </Link>
-          <Link to="/movies" className="nav-item nav-link active">
-            Movies
-          </Link>
-          <Link to="/shows" className="nav-item nav-link active">
-            TV Shows
-          </Link>
+          <div>
+            <Link className="navbar-brand" to="/">
+              Cinema954
+            </Link>
+          </div>
+          <div>
+            <Link to="/" className="nav-item nav-link active">
+              Home
+            </Link>
+            <Link to="/movies" className="nav-item nav-link active">
+              Movies
+            </Link>
+            <Link to="/shows" className="nav-item nav-link active">
+              TV Shows
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

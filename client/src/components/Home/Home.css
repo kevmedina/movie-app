@@ -1,11 +1,25 @@
 .home {
-  text-align: center;
-  background-color: black;
-  color: white;
-  height: calc(100vh - 60px);
+  max-width: 100%;
+  height: calc(100vh - 70px);
 }
 
-.home img {
-  width: 300px;
-  height: 150px;
+header {
+  height: 400px;
+  background-color: black;
+  color: red;
+  text-align: center;
+}
+
+.category {
+  height: 350px;
+}
+
+.category img {
+  width: 220px;
+  height: 220px;
+}
+
+.film-row {
+  display: flex;
+  overflow-x: scroll;
 }

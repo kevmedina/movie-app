@@ -17,7 +17,7 @@ const Movies = () => {
   }, []);
 
   return (
-    <div>
+    <div className="movies">
       <h1>Movies</h1>
 
       {/* Dropdown button for categories */}

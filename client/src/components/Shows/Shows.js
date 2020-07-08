@@ -28,7 +28,7 @@ const Shows = () => {
             />
             <div>
               <h4>{show.name}</h4>
-              {/* <p>{show.overview}</p> */}
+              <p>{show.overview}</p>
             </div>
           </div>
         ))}

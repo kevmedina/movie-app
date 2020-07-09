@@ -23,6 +23,10 @@ const SHOW_SERVICE = {
   getPopular() {
     return service.get(`/tv/popular?api_key=${process.env.REACT_APP_API_KEY}`);
   },
+
+  getDetails(tv_id) {
+    return service.get(`/tv/${tv_id}?api_key=${process.env.REACT_APP_API_KEY}`);
+  },
 };
 
 export default SHOW_SERVICE;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Shows.css";
-import SHOW_SERVICE from "../../services/tvShowService";
+import SHOW_SERVICE from "../../services/TvShowService";
 import Category from "../Category/Category";
 
 const Shows = () => {

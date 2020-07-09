@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Category.css";
 
 const Category = ({ category, title }) => {
@@ -8,16 +9,23 @@ const Category = ({ category, title }) => {
 
       <div className="film-row">
         {category.length > 0
-          ? category.map((movie, i) => (
-              <div key={i} className="movie">
+          ? category.map((film, i) => (
+              <Link
+                to={{
+                  pathname: `/details`,
+                  state: {
+                    id: film.id,
+                  },
+                }}
+                key={i}
+                className="item"
+              >
                 <img
-                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
                   alt="movie poster"
                 />
-                <div>
-                  <h4>{movie.title}</h4>
-                </div>
-              </div>
+                <h4>{film.title}</h4>
+              </Link>
             ))
           : null}
       </div>

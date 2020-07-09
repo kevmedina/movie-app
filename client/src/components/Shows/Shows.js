@@ -1,38 +1,47 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Shows.css";
-
-const URL = `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}`;
+import SHOW_SERVICE from "../../services/tvShowService";
+import Category from "../Category/Category";
 
 const Shows = () => {
-  const [shows, setShows] = useState([]);
+  const [topRatedShows, setTopRatedShows] = useState([]);
+  const [popularShows, setPopularShows] = useState([]);
+  const [airingToday, setAiringToday] = useState([]);
+
   useEffect(() => {
-    axios
-      .get(URL)
+    SHOW_SERVICE.getTopRated()
       .then((res) => {
-        console.log(res.data.results);
-        setShows(res.data.results);
+        setTopRatedShows(res.data.results);
+      })
+      .catch((err) => console.log(`Error: ${err}`));
+
+    SHOW_SERVICE.getAiringToday()
+      .then((res) => {
+        setAiringToday(res.data.results);
+      })
+      .catch((err) => console.log(`Error: ${err}`));
+
+    SHOW_SERVICE.getPopular()
+      .then((res) => {
+        setPopularShows(res.data.results);
       })
       .catch((err) => console.log(`Error: ${err}`));
   }, []);
 
   return (
-    <div>
-      <h1>TV Shows</h1>
-      <div className="shows-container">
-        {shows.map((show, i) => (
-          <div key={i} className="show">
-            <img
-              src={`https://image.tmdb.org/t/p/w300${show.poster_path}`}
-              alt="show poster"
-            />
-            <div>
-              <h4>{show.name}</h4>
-              <p>{show.overview}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="movie-container">
+      <header>
+        <h1>TV Shows</h1>
+      </header>
+
+      {/* Top Rated Movies */}
+      <Category category={topRatedShows} title="Top Rated" />
+
+      {/* Popular Movies  */}
+      <Category category={airingToday} title="Airing Today" />
+
+      {/* Now Playing */}
+      <Category category={popularShows} title="Now Playing" />
     </div>
   );
 };

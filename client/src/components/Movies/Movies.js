@@ -1,63 +1,47 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Movies.css";
+import MOVIE_SERVICE from "../../services/MovieService";
+import Category from "../Category/Category";
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+
   useEffect(() => {
-    axios
-      .get(URL)
+    MOVIE_SERVICE.getTopRated()
       .then((res) => {
-        console.log(res.data.results);
-        setMovies(res.data.results);
+        setTopRatedMovies(res.data.results);
+      })
+      .catch((err) => console.log(`Error: ${err}`));
+
+    MOVIE_SERVICE.getNowPlaying()
+      .then((res) => {
+        setNowPlayingMovies(res.data.results);
+      })
+      .catch((err) => console.log(`Error: ${err}`));
+
+    MOVIE_SERVICE.getPopular()
+      .then((res) => {
+        setPopularMovies(res.data.results);
       })
       .catch((err) => console.log(`Error: ${err}`));
   }, []);
 
   return (
-    <div className="movies">
-      <h1>Movies</h1>
+    <div className="movie-container">
+      <header>
+        <h1>Movies</h1>
+      </header>
 
-      {/* Dropdown button for categories */}
-      {/* <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Categories
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">
-            Action
-          </a>
-          <a class="dropdown-item" href="#">
-            Another action
-          </a>
-          <a class="dropdown-item" href="#">
-            Something else here
-          </a>
-        </div>
-      </div> */}
+      {/* Top Rated Movies */}
+      <Category category={topRatedMovies} title="Top Rated" />
 
-      {/* Movie Container */}
-      <div className="movies-container">
-        {movies.map((movie, i) => (
-          <div key={i} className="movie">
-            <img
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-              alt="movie poster"
-            />
-            <div>
-              <h4>{movie.original_title}</h4>
-              {/* <p>{movie.overview}</p> */}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Now Playing */}
+      <Category category={nowPlayingMovies} title="Now Playing" />
+
+      {/* Popular Movies  */}
+      <Category category={popularMovies} title="Most Popular" />
     </div>
   );
 };

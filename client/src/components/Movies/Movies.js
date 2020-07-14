@@ -11,6 +11,7 @@ const Movies = () => {
   useEffect(() => {
     MOVIE_SERVICE.getTopRated()
       .then((res) => {
+        console.log(res.data.results);
         setTopRatedMovies(res.data.results);
       })
       .catch((err) => console.log(`Error: ${err}`));

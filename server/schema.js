@@ -1,5 +1,5 @@
 const axios = require("axios");
-const baseURL = `https://api.themoviedb.org/3`;
+const baseURL = "https://api.themoviedb.org/3";
 
 const service = axios.create({
   baseURL,
@@ -33,14 +33,14 @@ const TvShowType = new GraphQLObjectType({
 });
 
 const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
+  name: "RootQuery",
   fields: {
     movie: {
       type: MovieType,
       args: { id: { type: GraphQLInt } },
       resolve(parent, args) {
         return service
-          .get(`/tv/${args.id}?api_key=${process.env.REACT_APP_API_KEY}`)
+          .get(`/movie/${args.id}?api_key=${process.env.API_KEY}`)
           .then((res) => res.data.results);
       },
     },
@@ -49,7 +49,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLInt } },
       resolve(parent, args) {
         return service
-          .get(`/movie/${args.id}?api_key=${process.env.REACT_APP_API_KEY}`)
+          .get(`/tv/${args.id}?api_key=${process.env.API_KEY}`)
           .then((res) => res.data.results);
       },
     },
@@ -57,7 +57,23 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(MovieType),
       resolve(parent, args) {
         return service
-          .get(`/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}`)
+          .get(`/movie/top_rated?api_key=${process.env.API_KEY}`)
+          .then((res) => res.data.results);
+      },
+    },
+    popularMovies: {
+      type: new GraphQLList(MovieType),
+      resolve(parent, args) {
+        return service
+          .get(`/movie/popular?api_key=${process.env.API_KEY}`)
+          .then((res) => res.data.results);
+      },
+    },
+    nowPlayingMovies: {
+      type: new GraphQLList(MovieType),
+      resolve(parent, args) {
+        return service
+          .get(`/movie/now_playing?api_key=${process.env.API_KEY}`)
           .then((res) => res.data.results);
       },
     },
@@ -65,7 +81,23 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(TvShowType),
       resolve(parent, args) {
         return service
-          .get(`/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}`)
+          .get(`/tv/top_rated?api_key=${process.env.API_KEY}`)
+          .then((res) => res.data.results);
+      },
+    },
+    popularTvShows: {
+      type: new GraphQLList(TvShowType),
+      resolve(parent, args) {
+        return service
+          .get(`/tv/popular?api_key=${process.env.API_KEY}`)
+          .then((res) => res.data.results);
+      },
+    },
+    tvShowsAiringToday: {
+      type: new GraphQLList(TvShowType),
+      resolve(parent, args) {
+        return service
+          .get(`/tv/airing_today?api_key=${process.env.API_KEY}`)
           .then((res) => res.data.results);
       },
     },

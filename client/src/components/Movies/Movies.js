@@ -1,48 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment } from "react";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 import "./Movies.css";
-import MOVIE_SERVICE from "../../services/MovieService";
 import Category from "../Category/Category";
 
+const MOVIES_QUERY = gql`
+  query MoviesQuery {
+    topRatedMovies {
+      id
+      title
+      overview
+      poster_path
+    }
+    nowPlayingMovies {
+      id
+      title
+      overview
+      poster_path
+    }
+    popularMovies {
+      id
+      title
+      overview
+      poster_path
+    }
+  }
+`;
+
 const Movies = () => {
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-
-  useEffect(() => {
-    MOVIE_SERVICE.getTopRated()
-      .then((res) => {
-        console.log(res.data.results);
-        setTopRatedMovies(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-
-    MOVIE_SERVICE.getNowPlaying()
-      .then((res) => {
-        setNowPlayingMovies(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-
-    MOVIE_SERVICE.getPopular()
-      .then((res) => {
-        setPopularMovies(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-  }, []);
-
   return (
     <div className="movie-container">
       <header>
         <h1>Movies</h1>
       </header>
+      <Query query={MOVIES_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(`Error: ${error}`);
+          const { topRatedMovies, nowPlayingMovies, popularMovies } = data;
+          return (
+            <Fragment>
+              {/* Top Rated Movies */}
+              <Category category={topRatedMovies} title="Top Rated" />
 
-      {/* Top Rated Movies */}
-      <Category category={topRatedMovies} title="Top Rated" />
+              {/* Now Playing */}
+              <Category category={nowPlayingMovies} title="Now Playing" />
 
-      {/* Now Playing */}
-      <Category category={nowPlayingMovies} title="Now Playing" />
-
-      {/* Popular Movies  */}
-      <Category category={popularMovies} title="Most Popular" />
+              {/* Popular Movies  */}
+              <Category category={popularMovies} title="Most Popular" />
+            </Fragment>
+          );
+        }}
+      </Query>
     </div>
   );
 };

@@ -1,47 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment } from "react";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 import "./Shows.css";
-import SHOW_SERVICE from "../../services/TvShowService";
 import Category from "../Category/Category";
 
+const TV_SHOWS_QUERY = gql`
+  query TvShowsQuery {
+    topRatedTvShows {
+      id
+      title
+      overview
+      poster_path
+    }
+    tvShowsAiringToday {
+      id
+      title
+      overview
+      poster_path
+    }
+    popularTvShows {
+      id
+      title
+      overview
+      poster_path
+    }
+  }
+`;
+
 const Shows = () => {
-  const [topRatedShows, setTopRatedShows] = useState([]);
-  const [popularShows, setPopularShows] = useState([]);
-  const [airingToday, setAiringToday] = useState([]);
-
-  useEffect(() => {
-    SHOW_SERVICE.getTopRated()
-      .then((res) => {
-        setTopRatedShows(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-
-    SHOW_SERVICE.getAiringToday()
-      .then((res) => {
-        setAiringToday(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-
-    SHOW_SERVICE.getPopular()
-      .then((res) => {
-        setPopularShows(res.data.results);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-  }, []);
-
   return (
     <div className="movie-container">
       <header>
         <h1>TV Shows</h1>
       </header>
 
-      {/* Top Rated Movies */}
-      <Category category={topRatedShows} title="Top Rated" />
+      <Query query={TV_SHOWS_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(`Error: ${error}`);
+          const { topRatedTvShows, tvShowsAiringToday, popularTvShows } = data;
 
-      {/* Popular Movies  */}
-      <Category category={airingToday} title="Airing Today" />
+          return (
+            <Fragment>
+              {/* Top Rated Movies */}
+              <Category category={topRatedTvShows} title="Top Rated" />
 
-      {/* Now Playing */}
-      <Category category={popularShows} title="Now Playing" />
+              {/* Popular Movies  */}
+              <Category category={tvShowsAiringToday} title="Airing Today" />
+
+              {/* Now Playing */}
+              <Category category={popularTvShows} title="Now Playing" />
+            </Fragment>
+          );
+        }}
+      </Query>
     </div>
   );
 };

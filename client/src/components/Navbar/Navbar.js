@@ -19,9 +19,6 @@ const Navbar = () => {
             <Link to="/movies" className="nav-item nav-link active">
               Movies
             </Link>
-            <Link to="/shows" className="nav-item nav-link active">
-              TV Shows
-            </Link>
           </div>
         </div>
       </div>

@@ -1,27 +1,42 @@
-import React, { useEffect, useState } from "react";
-import SHOW_SERVICE from "../../services/TvShowService";
+import React, { Fragment } from "react";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 import "./Details.css";
 
-const Details = (props) => {
-  const [details, setDetails] = useState([]);
-  const { id } = props.location.state;
+const MOVIE_DETAILS_QUERY = gql`
+  query movieDetailsQuery($id: Int) {
+    movie(id: $id) {
+      id
+      title
+      overview
+      poster_path
+    }
+  }
+`;
 
-  useEffect(() => {
-    SHOW_SERVICE.getDetails(id)
-      .then((res) => {
-        setDetails(res.data);
-      })
-      .catch((err) => console.log(`Error: ${err}`));
-  }, [id]);
+const Details = (props) => {
+  const { id } = props.location.state;
 
   return (
     <div className="details-container">
-      {console.log(details)}
-      <h1>{details.name}</h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w400${details.poster_path}`}
-        alt="TV Show Cover"
-      />
+      <Query query={MOVIE_DETAILS_QUERY} variables={{ id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(`Error: ${error}`);
+          console.log("Data: ", data);
+          const { title, overview, poster_path } = data.movie;
+          return (
+            <div className="movie-details">
+              <h1>{title}</h1>
+              <img
+                src={`https://image.tmdb.org/t/p/w400${poster_path}`}
+                alt="Movie Cover"
+              />
+              <p>{overview}</p>
+            </div>
+          );
+        }}
+      </Query>
     </div>
   );
 };

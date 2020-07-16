@@ -9,22 +9,22 @@ const Category = ({ category, title }) => {
 
       <div className="film-row">
         {category.length > 0
-          ? category.map((film, i) => (
+          ? category.map((movie, i) => (
               <Link
                 to={{
                   pathname: `/details`,
                   state: {
-                    id: film.id,
+                    id: movie.id,
                   },
                 }}
                 key={i}
                 className="item"
               >
                 <img
-                  src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   alt="movie poster"
                 />
-                <h4>{film.title}</h4>
+                <h4>{movie.title}</h4>
               </Link>
             ))
           : null}

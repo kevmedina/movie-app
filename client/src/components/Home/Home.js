@@ -14,9 +14,6 @@ const Home = () => {
           <Link to="/movies" className="link">
             Movies
           </Link>
-          <Link to="/shows" className="link">
-            TV Shows
-          </Link>
         </div>
       </header>
     </div>

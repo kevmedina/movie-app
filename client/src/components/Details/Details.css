@@ -7,6 +7,19 @@
 }
 
 .details-container img {
-  width: 500px;
-  height: 400px;
+  width: 550px;
+  height: 300px;
+}
+
+.movie-details {
+  width: 550px;
+  height: auto;
+}
+
+.movie-details h1 {
+  text-align: center;
+}
+
+.movie-details p {
+  margin-top: 20px;
 }

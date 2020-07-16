@@ -9,19 +9,16 @@ const MOVIES_QUERY = gql`
     topRatedMovies {
       id
       title
-      overview
       poster_path
     }
     nowPlayingMovies {
       id
       title
-      overview
       poster_path
     }
     popularMovies {
       id
       title
-      overview
       poster_path
     }
   }

@@ -20,15 +20,7 @@ const MovieType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     title: { type: GraphQLString },
     overview: { type: GraphQLString },
-  }),
-});
-
-const TvShowType = new GraphQLObjectType({
-  name: "TvShow",
-  fields: () => ({
-    id: { type: GraphQLInt },
-    title: { type: GraphQLString },
-    overview: { type: GraphQLString },
+    poster_path: { type: GraphQLString },
   }),
 });
 
@@ -41,16 +33,7 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return service
           .get(`/movie/${args.id}?api_key=${process.env.API_KEY}`)
-          .then((res) => res.data.results);
-      },
-    },
-    tvShow: {
-      type: TvShowType,
-      args: { id: { type: GraphQLInt } },
-      resolve(parent, args) {
-        return service
-          .get(`/tv/${args.id}?api_key=${process.env.API_KEY}`)
-          .then((res) => res.data.results);
+          .then((res) => res.data);
       },
     },
     topRatedMovies: {
@@ -74,30 +57,6 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return service
           .get(`/movie/now_playing?api_key=${process.env.API_KEY}`)
-          .then((res) => res.data.results);
-      },
-    },
-    topRatedTvShows: {
-      type: new GraphQLList(TvShowType),
-      resolve(parent, args) {
-        return service
-          .get(`/tv/top_rated?api_key=${process.env.API_KEY}`)
-          .then((res) => res.data.results);
-      },
-    },
-    popularTvShows: {
-      type: new GraphQLList(TvShowType),
-      resolve(parent, args) {
-        return service
-          .get(`/tv/popular?api_key=${process.env.API_KEY}`)
-          .then((res) => res.data.results);
-      },
-    },
-    tvShowsAiringToday: {
-      type: new GraphQLList(TvShowType),
-      resolve(parent, args) {
-        return service
-          .get(`/tv/airing_today?api_key=${process.env.API_KEY}`)
           .then((res) => res.data.results);
       },
     },

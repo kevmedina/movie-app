@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 4002;
 // Create an express server and a GraphQL endpoint
 const app = express();
 
+// allow cross-origin request
 app.use(cors());
 
 app.use(
